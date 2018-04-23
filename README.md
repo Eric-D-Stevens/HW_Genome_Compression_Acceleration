@@ -151,3 +151,32 @@ As long as the number of sequence reads is divisible by four (which Illumina seq
 you can string these blocks one after another until an entire line is compressed in a single clk. 
 from there you can add those blocks for different file streams the same way as was designed for in 
 the sequence name compression section.
+
+### Read Quality Score Compression
+
+For the moment read quality scores are being gziped on the client. We hope to design a more effective
+way to compress this data soon.
+
+
+## Decompression
+
+### Sequence Name Decompression
+
+The sequence name decompressor takes the compressed file fields with the counters attached and outputs 
+the data until the counter runs to zero. The write bit is always set. when the counter runs to zero then 
+a flop takes place and allows the next entry from memory to enter the write output register.
+
+### Gene Sequence Decompression
+
+The two bit encodings are fed into a block that builds the byte. The logic of this block is as follows:
+
+![alt text](./readme-files/gene-decompress.png)
+
+There is a write back to file after each clock cycle.
+
+### Postprocessing
+
+Once the files have been decompressed back into there seperated three data types, a bash script is run 
+to reshuffle them into the proper fastq format. 
+
+

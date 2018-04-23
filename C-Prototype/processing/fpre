@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo begin
+echo outputing names
+awk 'NR%4==1 {print > "name.tst"}'  ./test.fastq &
+echo outputing gene
+awk 'NR%4==2 {print > "gene.tst"}'  ./test.fastq &
+echo outputting quality scores
+awk 'NR%4==0 {print > "qual.tst"}'  ./test.fastq &
+wait
+echo finished
+

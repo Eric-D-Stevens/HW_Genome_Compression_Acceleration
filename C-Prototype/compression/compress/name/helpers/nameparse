@@ -1,0 +1,6 @@
+#!/bin/bash
+
+place=$1
+#echo $place 
+awk 'BEGIN { FS=":"; }
+{print $'$place'}' name.tst

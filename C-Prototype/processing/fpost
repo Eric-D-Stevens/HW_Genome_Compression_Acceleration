@@ -1,0 +1,11 @@
+#!/bin/bash
+
+paste -d '\n' name.tst gene.tst qual.tst | awk '1; NR % 3 == 2 {print "+"}'>output.fastq
+
+~
+~
+~
+~
+~
+~
+

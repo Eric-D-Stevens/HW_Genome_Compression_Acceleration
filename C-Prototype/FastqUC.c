@@ -24,7 +24,7 @@ int FQcompress(){
 	system("gzip -f qual.tst");
 	system("gzip -f compressed.gc");
 	system("gzip -f compressed.nc");
-	system("zip FUC.zip compressed.gc.gz compressed.nc.gz qual.tst.gz");
+	system("zip FastqUC.zip compressed.gc.gz compressed.nc.gz qual.tst.gz");
 	system("rm *tst temp* qual.tst.gz compressed.gc.gz compressed.nc.gz");
 
 return 0;
@@ -32,7 +32,7 @@ return 0;
 
 
 int FQdecompress(){
-	system("unzip FUC.zip");
+	system("unzip FastqUC.zip");
 	system("gzip -d compressed.gc");
 	system("./compression/decompress/gene/out_filter");
 	system("gzip -d compressed.nc.gz");

@@ -7,6 +7,8 @@ int FQdecompress();
 
 int main(int argc, char ** argv){
 
+	printf("atleast we made it");
+
 	if(!strcmp(argv[1],"-c")){FQcompress();}
 	else if(!strcmp(argv[1],"-d")){FQdecompress();}
 

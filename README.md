@@ -88,3 +88,66 @@ These three files can then be fed to hardware compression blocks for seperate an
 compression. There are only three files instead of four because we do not need to compress 
 the blank / second name line.
 
+### Sequence Name Compression
+
+When looking at the sequence identifier (name) file we can see that almost all of the information 
+from line to line is the same. There are a few numbers that change, but for the most part 
+all the information is repeated line after line. If you look at a large enough fastq file 
+you will notice that some of the numbers that appear to be static actually do change after a
+megabyte of file. Other sections, like the ID of the sequencer used (first section) never change. 
+There for the strategy that was developed to compress this ID file is to split the colon seperated 
+segments of the ID into individual streams and apply a form of run length encoding to them. 
+
+<br />
+
+In hardware the run length encoder will look like this:
+
+![alt text](./readme-files/rl-encoder.png)
+
+As data is fed into the block it enters a four stage pipeline. While the data repeated the block 
+will not write any data to the output and a counter will increment. When a change in the pipeline 
+is detected, it enters into first stage where it triggers a reset to the counter. On the next stage 
+the write signal is set and the value of the previous data and the counter before the reset is 
+written to file.
+
+<br /> 
+
+While this method may not appear to be highly parallel due to its dependency on preivous data, this 
+process can be taken up at any line in the file without knowledge of previous run lengths. Therefore, 
+in hardware you can implement multiple blocks and multiple streams at seperate locations in the file 
+to achieve highly parallel processing.
+
+### Gene Sequence Compression
+
+For the gene sequence itself we have elected to implement a very simple fixed length encoding scheme. 
+This choice was selected for both its highly parallelizable nature and for the fact that by taking 
+advantage of a coincidence if ASCII, it is a fairly elegant solution.
+
+<br />
+
+The ASCII values for gene letters are as follows:
+
+```
+A: 01000001
+C: 01000011
+G: 01000111
+T: 01010100
+```
+
+Now lets look at only the second and first bits:
+
+```
+A[2:1]: 00
+C[2:1]: 01
+G[2:1]: 11
+T[2:1]: 10
+```
+As we can see, we have a different encoding for each of the letters just by pulling the second and 
+first bits. This makes hardware implementation very simple:
+
+![alt text](./readme-files/gene-compress.png)
+
+As long as the number of sequence reads is divisible by four (which Illumina sequences are) then 
+you can string these blocks one after another until an entire line is compressed in a single clk. 
+from there you can add those blocks for different file streams the same way as was designed for in 
+the sequence name compression section.

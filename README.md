@@ -35,14 +35,19 @@ implementing the scheme in hardware.
 
 ### Usage
 
+To get access to the C prototype, move from the main repository directory into the 
+C-Prototype directory. Either move your own fastq file or use the small profided one 
+`test.fastq`.
+
 Compression:
 ```
-./FastqUC -c filename.fastq
+./FastqUC -c <input file name> <output file name>
 ```
 
 Decompression:
 ```
-./FastqUC -d FastqUC.zip
+./FastqUC -d  <input file name> <output file name>
+
 ```
 
 ## Design

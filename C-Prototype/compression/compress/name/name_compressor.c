@@ -6,20 +6,20 @@ int getLine(char* str, FILE * fp);
 
 int main(){
 		printf("\nENTERED NAME COMPRESSOR\n");
-	
-			
+
+
 	int field; // feild of the sequence id 
 	FILE * fp_in; // sequence ids output from preprocessor
 	FILE * fp_out;
 	fp_out=fopen("compressed.nc","w");
 	// loops through every field
 	for(field = 1; field < 11; field++){
-	
+
 
 		char command[150]; // commands to be executed
 
-		
-		// parse out one field 
+
+		// parse out one field
 		sprintf(command, "./compression/compress/name/helpers/nameparse %d > temp", field);
 		//sprintf(command, "./helpers/nameparse %d > temp", field);
 		system(command);
@@ -38,16 +38,16 @@ int main(){
 				count++;
 				read_status = getLine(cmp,fp_in);
 				if(!read_status){break;}
-	
+
 			}
 			fprintf(fp_out,"%s\n%d\n", hold, count);
 			count = 0;
-			
+
 		}
 		fclose(fp_in);
 		fprintf(fp_out,"#####\n");
-	}	
-		
+	}
+
 	fclose(fp_out);
 
 

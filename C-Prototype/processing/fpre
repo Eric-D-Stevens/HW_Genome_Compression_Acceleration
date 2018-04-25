@@ -2,11 +2,11 @@
 
 echo begin
 echo outputing names
-awk 'NR%4==1 {print > "name.tst"}'  ./test.fastq &
+awk 'NR%4==1 {print > "name.tst"}'  ./$1 &
 echo outputing gene
-awk 'NR%4==2 {print > "gene.tst"}'  ./test.fastq &
+awk 'NR%4==2 {print > "gene.tst"}'  ./$1 &
 echo outputting quality scores
-awk 'NR%4==0 {print > "qual.tst"}'  ./test.fastq &
+awk 'NR%4==0 {print > "qual.tst"}'  ./$1 &
 wait
 echo finished
 

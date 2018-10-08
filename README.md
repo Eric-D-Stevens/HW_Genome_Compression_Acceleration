@@ -1,4 +1,4 @@
-# Hardware Compression Acceleration of FASTQ Gene Sequence Files
+# Hardware Acceleration of FASTQ Gene Sequence File Compression 
 
 As we enter the age of low cost, high accuracy next generation gene 
 sequencing machines and computational biology, there will be an explosion 
